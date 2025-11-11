@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // PUBLIC_INTERFACE
 /**
  * Navbar component - Top navigation bar with minimalist Soft Mono styling
- * Features a clean, professional appearance with navigation links
+ * Features a clean, professional appearance with navigation links and user profile popover
  * 
  * @returns {JSX.Element} The navbar component
  */
 function Navbar() {
+  const [showPopover, setShowPopover] = useState(false);
+
   return (
     <nav className="bg-surface border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-6 py-4">
@@ -45,10 +47,32 @@ function Navbar() {
             </Link>
           </div>
 
-          {/* User Section (Placeholder) */}
+          {/* User Section with Popover */}
           <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center">
-              <span className="text-white font-medium text-sm">U</span>
+            <div 
+              className="relative"
+              onMouseEnter={() => setShowPopover(true)}
+              onMouseLeave={() => setShowPopover(false)}
+              onFocus={() => setShowPopover(true)}
+              onBlur={() => setShowPopover(false)}
+              tabIndex={0}
+              role="button"
+              aria-label="User profile"
+            >
+              <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center cursor-pointer">
+                <span className="text-white font-medium text-sm">U</span>
+              </div>
+              
+              {/* Popover */}
+              {showPopover && (
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 z-50">
+                  <div className="bg-white rounded-lg shadow-lg px-4 py-2 border border-gray-200">
+                    <span className="text-text text-sm font-medium whitespace-nowrap">
+                      User
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
