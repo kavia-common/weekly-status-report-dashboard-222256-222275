@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Button from './Button';
+import Input from './Input';
 
 // PUBLIC_INTERFACE
 /**
@@ -170,147 +172,89 @@ function ReportForm({ onSubmit, initialData = {}, isSubmitting = false }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Accomplishments Field */}
-      <div>
-        <label htmlFor="accomplishments" className="form-label">
-          Accomplishments <span className="text-error">*</span>
-        </label>
-        <textarea
-          id="accomplishments"
-          name="accomplishments"
-          value={formData.accomplishments}
-          onChange={handleChange}
-          onBlur={() => handleBlur('accomplishments')}
-          rows="5"
-          className={`textarea-field ${
-            touched.accomplishments && errors.accomplishments
-              ? 'border-error focus:ring-error'
-              : ''
-          }`}
-          placeholder="List your key accomplishments this week (e.g., completed features, resolved issues, milestones reached)"
-          disabled={isSubmitting}
-        />
-        {touched.accomplishments && errors.accomplishments && (
-          <p className="error-message">{errors.accomplishments}</p>
-        )}
-        <p className="text-xs text-secondary mt-1">
-          {formData.accomplishments.length} characters
-        </p>
-      </div>
+      <Input
+        type="textarea"
+        id="accomplishments"
+        name="accomplishments"
+        label="Accomplishments"
+        value={formData.accomplishments}
+        onChange={handleChange}
+        onBlur={() => handleBlur('accomplishments')}
+        rows={5}
+        placeholder="List your key accomplishments this week (e.g., completed features, resolved issues, milestones reached)"
+        disabled={isSubmitting}
+        required
+        error={touched.accomplishments ? errors.accomplishments : ''}
+        hint={`${formData.accomplishments.length} characters`}
+      />
 
       {/* Goals Field */}
-      <div>
-        <label htmlFor="goals" className="form-label">
-          Goals for Next Week <span className="text-error">*</span>
-        </label>
-        <textarea
-          id="goals"
-          name="goals"
-          value={formData.goals}
-          onChange={handleChange}
-          onBlur={() => handleBlur('goals')}
-          rows="5"
-          className={`textarea-field ${
-            touched.goals && errors.goals
-              ? 'border-error focus:ring-error'
-              : ''
-          }`}
-          placeholder="Outline your planned goals and objectives for next week"
-          disabled={isSubmitting}
-        />
-        {touched.goals && errors.goals && (
-          <p className="error-message">{errors.goals}</p>
-        )}
-        <p className="text-xs text-secondary mt-1">
-          {formData.goals.length} characters
-        </p>
-      </div>
+      <Input
+        type="textarea"
+        id="goals"
+        name="goals"
+        label="Goals for Next Week"
+        value={formData.goals}
+        onChange={handleChange}
+        onBlur={() => handleBlur('goals')}
+        rows={5}
+        placeholder="Outline your planned goals and objectives for next week"
+        disabled={isSubmitting}
+        required
+        error={touched.goals ? errors.goals : ''}
+        hint={`${formData.goals.length} characters`}
+      />
 
       {/* Blockers Field */}
-      <div>
-        <label htmlFor="blockers" className="form-label">
-          Blockers / Challenges
-        </label>
-        <textarea
-          id="blockers"
-          name="blockers"
-          value={formData.blockers}
-          onChange={handleChange}
-          onBlur={() => handleBlur('blockers')}
-          rows="4"
-          className="textarea-field"
-          placeholder="Describe any blockers, challenges, or issues you encountered (optional)"
-          disabled={isSubmitting}
-        />
-        <p className="text-xs text-secondary mt-1">
-          {formData.blockers.length} characters
-        </p>
-      </div>
+      <Input
+        type="textarea"
+        id="blockers"
+        name="blockers"
+        label="Blockers / Challenges"
+        value={formData.blockers}
+        onChange={handleChange}
+        onBlur={() => handleBlur('blockers')}
+        rows={4}
+        placeholder="Describe any blockers, challenges, or issues you encountered (optional)"
+        disabled={isSubmitting}
+        hint={`${formData.blockers.length} characters`}
+      />
 
       {/* Highlights Field */}
-      <div>
-        <label htmlFor="highlights" className="form-label">
-          Highlights / Notes
-        </label>
-        <textarea
-          id="highlights"
-          name="highlights"
-          value={formData.highlights}
-          onChange={handleChange}
-          onBlur={() => handleBlur('highlights')}
-          rows="4"
-          className="textarea-field"
-          placeholder="Add any additional highlights, notes, or achievements worth mentioning (optional)"
-          disabled={isSubmitting}
-        />
-        <p className="text-xs text-secondary mt-1">
-          {formData.highlights.length} characters
-        </p>
-      </div>
+      <Input
+        type="textarea"
+        id="highlights"
+        name="highlights"
+        label="Highlights / Notes"
+        value={formData.highlights}
+        onChange={handleChange}
+        onBlur={() => handleBlur('highlights')}
+        rows={4}
+        placeholder="Add any additional highlights, notes, or achievements worth mentioning (optional)"
+        disabled={isSubmitting}
+        hint={`${formData.highlights.length} characters`}
+      />
 
       {/* Form Actions */}
       <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-        <button
+        <Button
           type="button"
+          variant="secondary"
           onClick={handleReset}
-          className="px-6 py-2.5 text-text hover:text-primary transition-colors duration-200 font-medium"
           disabled={isSubmitting}
         >
           Reset
-        </button>
+        </Button>
 
-        <button
+        <Button
           type="submit"
-          className="btn-primary px-8 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed"
+          variant="primary"
+          size="lg"
+          loading={isSubmitting}
           disabled={isSubmitting}
         >
-          {isSubmitting ? (
-            <span className="flex items-center space-x-2">
-              <svg
-                className="animate-spin h-5 w-5"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                />
-              </svg>
-              <span>Submitting...</span>
-            </span>
-          ) : (
-            'Submit Report'
-          )}
-        </button>
+          {isSubmitting ? 'Submitting...' : 'Submit Report'}
+        </Button>
       </div>
     </form>
   );

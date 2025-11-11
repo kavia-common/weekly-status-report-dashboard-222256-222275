@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import { Button } from '../components';
 
 // PUBLIC_INTERFACE
 /**
@@ -229,9 +230,9 @@ function ReportDetailPage() {
             <p className="text-secondary mb-6">
               {error || `The report with ID "${id}" could not be found.`}
             </p>
-            <button onClick={handleBack} className="btn-primary">
+            <Button variant="primary" onClick={handleBack}>
               ← Back to History
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -526,12 +527,15 @@ function ReportDetailPage() {
               </div>
 
               <div className="pt-4 border-t border-purple-200">
-                <button
+                <Button
+                  variant="secondary"
+                  size="md"
                   disabled
-                  className="w-full px-4 py-2 bg-purple-200 text-purple-400 rounded-lg font-medium text-sm cursor-not-allowed"
+                  fullWidth
+                  className="bg-purple-200 text-purple-400 hover:bg-purple-200"
                 >
                   Generate Summary
-                </button>
+                </Button>
                 <p className="text-xs text-center text-secondary mt-2">
                   Feature in development
                 </p>
@@ -547,12 +551,12 @@ function ReportDetailPage() {
           ← Back to All Reports
         </Link>
         <div className="flex items-center space-x-4">
-          <button className="px-6 py-2 border border-gray-300 text-text rounded-lg hover:bg-gray-50 transition-colors font-medium">
+          <Button variant="secondary" size="md">
             Export PDF
-          </button>
-          <button className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-gray-600 transition-colors font-medium">
+          </Button>
+          <Button variant="primary" size="md">
             Share Report
-          </button>
+          </Button>
         </div>
       </div>
 

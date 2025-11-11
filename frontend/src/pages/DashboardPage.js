@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
+import { Button } from '../components';
 
 // PUBLIC_INTERFACE
 /**
@@ -459,25 +460,24 @@ function DashboardPage() {
 
             {/* View All Button */}
             <div className="mt-6 pt-4 border-t border-gray-200 text-center">
-              <Link
-                to="/history"
-                className="inline-flex items-center px-6 py-2 bg-gray-100 hover:bg-gray-200 text-text rounded-lg transition-colors duration-200 font-medium"
-              >
-                View All Reports
-                <svg
-                  className="w-4 h-4 ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
+              <Link to="/history">
+                <Button variant="secondary" size="md" className="bg-gray-100 hover:bg-gray-200 text-text">
+                  View All Reports
+                  <svg
+                    className="w-4 h-4 ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </Button>
               </Link>
             </div>
           </div>

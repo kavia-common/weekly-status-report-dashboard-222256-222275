@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReportCard from '../components/ReportCard';
+import { ReportCard, Button } from '../components';
 
 // PUBLIC_INTERFACE
 /**
@@ -371,15 +371,15 @@ function HistoryPage() {
                 : 'You haven\'t submitted any reports yet'}
             </p>
             {(searchQuery || statusFilter !== 'all') && (
-              <button
+              <Button
+                variant="primary"
                 onClick={() => {
                   setSearchQuery('');
                   setStatusFilter('all');
                 }}
-                className="btn-primary"
               >
                 Clear Filters
-              </button>
+              </Button>
             )}
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from '../components';
 
 // PUBLIC_INTERFACE
 /**
@@ -316,9 +317,9 @@ function AdminTeamsPage() {
 
           {/* Add Team Button */}
           <div className="flex items-center space-x-4">
-            <button className="btn-primary flex items-center space-x-2">
+            <Button variant="primary">
               <svg
-                className="w-5 h-5"
+                className="w-5 h-5 mr-2"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -332,7 +333,7 @@ function AdminTeamsPage() {
                 />
               </svg>
               <span>Add Team</span>
-            </button>
+            </Button>
           </div>
         </div>
 
