@@ -79,10 +79,10 @@ function Layout({ children }) {
       </aside>
 
       {/* Main Content Area with Sidebar */}
-      <div className="flex flex-1 min-h-0 md:min-h-screen">
+      <div className="flex flex-1 overflow-hidden">
         {/* Sidebar Navigation - visible on md and larger */}
-        <div className="hidden md:flex md:h-screen">
-          <Sidebar className="h-full" />
+        <div className="hidden md:block">
+          <Sidebar />
         </div>
 
         {/* Content Area */}

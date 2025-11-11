@@ -34,10 +34,10 @@ function Sidebar({ onNavigate, className = '' }) {
 
   return (
     <aside
-      className={`w-64 bg-surface border-r border-gray-200 min-h-screen md:h-screen ${className}`}
+      className={`w-64 bg-surface border-r border-gray-200 min-h-screen ${className}`}
       aria-label="Sidebar navigation"
     >
-      <div className="p-6 h-full overflow-y-auto">
+      <div className="p-6">
         {/* Main Navigation */}
         <nav className="space-y-2">
           <h3 className="text-xs font-semibold text-secondary uppercase tracking-wider mb-4">
