@@ -81,7 +81,7 @@ function Layout({ children }) {
       {/* Main Content Area with Sidebar */}
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar Navigation - visible on md and larger */}
-        <div className="hidden md:block">
+        <div className="hidden md:flex">
           <Sidebar />
         </div>
 
