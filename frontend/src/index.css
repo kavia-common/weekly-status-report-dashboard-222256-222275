@@ -1,13 +1,87 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles aligned with Minimalist Soft Mono theme */
+@layer base {
+  body {
+    @apply m-0 bg-background text-text antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  code {
+    @apply font-mono;
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply h-full;
+  }
+
+  body {
+    @apply h-full;
+  }
+
+  #root {
+    @apply h-full;
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Custom component styles */
+@layer components {
+  /* Button variants */
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors duration-200 font-medium;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-white px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors duration-200 font-medium;
+  }
+
+  .btn-success {
+    @apply bg-success text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-200 font-medium;
+  }
+
+  .btn-error {
+    @apply bg-error text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors duration-200 font-medium;
+  }
+
+  /* Card component */
+  .card {
+    @apply bg-surface rounded-lg shadow-md p-6 border border-gray-200;
+  }
+
+  /* Input field */
+  .input-field {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all;
+  }
+
+  /* Textarea field */
+  .textarea-field {
+    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-vertical;
+  }
+
+  /* Label */
+  .form-label {
+    @apply block text-sm font-medium text-text mb-2;
+  }
+
+  /* Error message */
+  .error-message {
+    @apply text-error text-sm mt-1;
+  }
+}
+
+/* Utility classes */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
