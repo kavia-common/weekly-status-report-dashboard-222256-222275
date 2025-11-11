@@ -123,10 +123,38 @@ function Navbar({ onMenuClick }) {
             </div>
             {showPopover && (
               <div className="absolute top-full right-0 mt-2 z-50">
-                <div className="bg-white rounded-lg shadow-lg px-4 py-2 border border-gray-200">
-                  <span className="text-text text-sm font-medium whitespace-nowrap">
-                    User
-                  </span>
+                <div className="bg-white rounded-lg shadow-lg p-3 border border-gray-200 w-48">
+                  <div className="mb-2">
+                    <span className="text-text text-sm font-medium whitespace-nowrap">
+                      User
+                    </span>
+                  </div>
+                  <div className="space-y-2">
+                      <button
+                        type="button"
+                        data-testid="role-btn-employee"
+                        className="w-full inline-flex items-center justify-center rounded-md border border-gray-200 px-3 py-2 text-sm text-text hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors"
+                        onClick={() => {}}
+                      >
+                        Employee
+                      </button>
+                      <button
+                        type="button"
+                        data-testid="role-btn-manager"
+                        className="w-full inline-flex items-center justify-center rounded-md border border-gray-200 px-3 py-2 text-sm text-text hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors"
+                        onClick={() => {}}
+                      >
+                        Manager
+                      </button>
+                      <button
+                        type="button"
+                        data-testid="role-btn-admin"
+                        className="w-full inline-flex items-center justify-center rounded-md border border-gray-200 px-3 py-2 text-sm text-text hover:bg-gray-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 transition-colors"
+                        onClick={() => {}}
+                      >
+                        Admin
+                      </button>
+                  </div>
                 </div>
               </div>
             )}

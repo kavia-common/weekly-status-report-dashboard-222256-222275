@@ -5,25 +5,28 @@ import Input from './Input';
 // PUBLIC_INTERFACE
 /**
  * ReportForm component - Reusable form for submitting weekly status reports
- * Features Tailwind-styled inputs with client-side validation for:
- * - Accomplishments (required)
- * - Goals (required)
- * - Blockers (optional)
- * - Highlights (optional)
- * 
+ * Minimalist Soft Mono themed Tailwind inputs with client-side validation.
+ * Fields:
+ * - What was worked on / resolutions (required)
+ * - blockers (optional)
+ * - help needed (optional)
+ * - key learnings (optional)
+ * - next week’s plan (optional)
+ *
  * @param {Object} props - Component props
- * @param {Function} props.onSubmit - Callback function when form is submitted with valid data
+ * @param {Function} props.onSubmit - Callback when form is submitted with valid data
  * @param {Object} props.initialData - Optional initial form data for editing
  * @param {boolean} props.isSubmitting - Optional flag to show loading state
  * @returns {JSX.Element} The report form component
  */
 function ReportForm({ onSubmit, initialData = {}, isSubmitting = false }) {
-  // Form state
+  // Form state mapped to new fields; keep object structure to not break submit behavior
   const [formData, setFormData] = useState({
-    accomplishments: initialData.accomplishments || '',
-    goals: initialData.goals || '',
+    workedOn: initialData.workedOn || initialData.accomplishments || '',
     blockers: initialData.blockers || '',
-    highlights: initialData.highlights || ''
+    helpNeeded: initialData.helpNeeded || '',
+    learnings: initialData.learnings || initialData.highlights || '',
+    nextWeekPlan: initialData.nextWeekPlan || initialData.goals || ''
   });
 
   // Validation errors state
@@ -38,14 +41,14 @@ function ReportForm({ onSubmit, initialData = {}, isSubmitting = false }) {
    */
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }));
 
     // Clear error for this field when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [name]: ''
       }));
@@ -57,7 +60,7 @@ function ReportForm({ onSubmit, initialData = {}, isSubmitting = false }) {
    * @param {string} fieldName - Name of the field
    */
   const handleBlur = (fieldName) => {
-    setTouched(prev => ({
+    setTouched((prev) => ({
       ...prev,
       [fieldName]: true
     }));
@@ -66,6 +69,7 @@ function ReportForm({ onSubmit, initialData = {}, isSubmitting = false }) {
 
   /**
    * Validate a single field
+   * Only 'workedOn' is required.
    * @param {string} fieldName - Name of the field to validate
    * @param {string} value - Value to validate
    * @returns {string} Error message if invalid, empty string if valid
@@ -74,32 +78,25 @@ function ReportForm({ onSubmit, initialData = {}, isSubmitting = false }) {
     let error = '';
 
     switch (fieldName) {
-      case 'accomplishments':
+      case 'workedOn':
         if (!value.trim()) {
-          error = 'Accomplishments are required';
-        } else if (value.trim().length < 10) {
-          error = 'Please provide at least 10 characters';
-        }
-        break;
-      case 'goals':
-        if (!value.trim()) {
-          error = 'Goals are required';
+          error = 'This field is required';
         } else if (value.trim().length < 10) {
           error = 'Please provide at least 10 characters';
         }
         break;
       case 'blockers':
-        // Optional field - no validation
-        break;
-      case 'highlights':
-        // Optional field - no validation
+      case 'helpNeeded':
+      case 'learnings':
+      case 'nextWeekPlan':
+        // Optional fields - no validation rules
         break;
       default:
         break;
     }
 
     if (error) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
         [fieldName]: error
       }));
@@ -110,33 +107,28 @@ function ReportForm({ onSubmit, initialData = {}, isSubmitting = false }) {
 
   /**
    * Validate all form fields
+   * Only enforce validation on 'workedOn'.
    * @returns {boolean} True if form is valid, false otherwise
    */
   const validateForm = () => {
     const newErrors = {};
 
-    // Validate accomplishments
-    if (!formData.accomplishments.trim()) {
-      newErrors.accomplishments = 'Accomplishments are required';
-    } else if (formData.accomplishments.trim().length < 10) {
-      newErrors.accomplishments = 'Please provide at least 10 characters';
-    }
-
-    // Validate goals
-    if (!formData.goals.trim()) {
-      newErrors.goals = 'Goals are required';
-    } else if (formData.goals.trim().length < 10) {
-      newErrors.goals = 'Please provide at least 10 characters';
+    // Validate required field
+    if (!formData.workedOn.trim()) {
+      newErrors.workedOn = 'This field is required';
+    } else if (formData.workedOn.trim().length < 10) {
+      newErrors.workedOn = 'Please provide at least 10 characters';
     }
 
     setErrors(newErrors);
 
     // Mark all fields as touched
     setTouched({
-      accomplishments: true,
-      goals: true,
+      workedOn: true,
       blockers: true,
-      highlights: true
+      helpNeeded: true,
+      learnings: true,
+      nextWeekPlan: true
     });
 
     return Object.keys(newErrors).length === 0;
@@ -144,6 +136,7 @@ function ReportForm({ onSubmit, initialData = {}, isSubmitting = false }) {
 
   /**
    * Handle form submission
+   * Keep submission behavior unchanged (pass formData object).
    * @param {Event} e - Form submit event
    */
   const handleSubmit = (e) => {
@@ -160,10 +153,11 @@ function ReportForm({ onSubmit, initialData = {}, isSubmitting = false }) {
    */
   const handleReset = () => {
     setFormData({
-      accomplishments: initialData.accomplishments || '',
-      goals: initialData.goals || '',
+      workedOn: initialData.workedOn || initialData.accomplishments || '',
       blockers: initialData.blockers || '',
-      highlights: initialData.highlights || ''
+      helpNeeded: initialData.helpNeeded || '',
+      learnings: initialData.learnings || initialData.highlights || '',
+      nextWeekPlan: initialData.nextWeekPlan || initialData.goals || ''
     });
     setErrors({});
     setTouched({});
@@ -171,68 +165,86 @@ function ReportForm({ onSubmit, initialData = {}, isSubmitting = false }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Accomplishments Field */}
+      {/* What was worked on / resolutions - required */}
       <Input
         type="textarea"
-        id="accomplishments"
-        name="accomplishments"
-        label="Accomplishments"
-        value={formData.accomplishments}
+        id="workedOn"
+        name="workedOn"
+        label="What was worked on / resolutions"
+        value={formData.workedOn}
         onChange={handleChange}
-        onBlur={() => handleBlur('accomplishments')}
-        rows={5}
-        placeholder="List your key accomplishments this week (e.g., completed features, resolved issues, milestones reached)"
+        onBlur={() => handleBlur('workedOn')}
+        rows={6}
+        placeholder="Summarize the work completed and resolutions achieved this week..."
         disabled={isSubmitting}
         required
-        error={touched.accomplishments ? errors.accomplishments : ''}
-        hint={`${formData.accomplishments.length} characters`}
+        error={touched.workedOn ? errors.workedOn : ''}
+        hint={`${formData.workedOn.length} characters`}
+        data-testid="field-worked-on"
       />
 
-      {/* Goals Field */}
-      <Input
-        type="textarea"
-        id="goals"
-        name="goals"
-        label="Goals for Next Week"
-        value={formData.goals}
-        onChange={handleChange}
-        onBlur={() => handleBlur('goals')}
-        rows={5}
-        placeholder="Outline your planned goals and objectives for next week"
-        disabled={isSubmitting}
-        required
-        error={touched.goals ? errors.goals : ''}
-        hint={`${formData.goals.length} characters`}
-      />
-
-      {/* Blockers Field */}
+      {/* Blockers - optional */}
       <Input
         type="textarea"
         id="blockers"
         name="blockers"
-        label="Blockers / Challenges"
+        label="Blockers"
         value={formData.blockers}
         onChange={handleChange}
         onBlur={() => handleBlur('blockers')}
         rows={4}
-        placeholder="Describe any blockers, challenges, or issues you encountered (optional)"
+        placeholder="List any blockers or challenges (optional)"
         disabled={isSubmitting}
         hint={`${formData.blockers.length} characters`}
+        data-testid="field-blockers"
       />
 
-      {/* Highlights Field */}
+      {/* Help needed - optional */}
       <Input
         type="textarea"
-        id="highlights"
-        name="highlights"
-        label="Highlights / Notes"
-        value={formData.highlights}
+        id="helpNeeded"
+        name="helpNeeded"
+        label="Help needed"
+        value={formData.helpNeeded}
         onChange={handleChange}
-        onBlur={() => handleBlur('highlights')}
+        onBlur={() => handleBlur('helpNeeded')}
         rows={4}
-        placeholder="Add any additional highlights, notes, or achievements worth mentioning (optional)"
+        placeholder="Describe any help or support you need (optional)"
         disabled={isSubmitting}
-        hint={`${formData.highlights.length} characters`}
+        hint={`${formData.helpNeeded.length} characters`}
+        data-testid="field-help-needed"
+      />
+
+      {/* Key learnings - optional */}
+      <Input
+        type="textarea"
+        id="learnings"
+        name="learnings"
+        label="Key learnings"
+        value={formData.learnings}
+        onChange={handleChange}
+        onBlur={() => handleBlur('learnings')}
+        rows={4}
+        placeholder="Share key learnings or insights from this week (optional)"
+        disabled={isSubmitting}
+        hint={`${formData.learnings.length} characters`}
+        data-testid="field-key-learnings"
+      />
+
+      {/* Next week’s plan - optional */}
+      <Input
+        type="textarea"
+        id="nextWeekPlan"
+        name="nextWeekPlan"
+        label="Next week’s plan"
+        value={formData.nextWeekPlan}
+        onChange={handleChange}
+        onBlur={() => handleBlur('nextWeekPlan')}
+        rows={5}
+        placeholder="Outline your plan and priorities for next week (optional)"
+        disabled={isSubmitting}
+        hint={`${formData.nextWeekPlan.length} characters`}
+        data-testid="field-next-week-plan"
       />
 
       {/* Form Actions */}
