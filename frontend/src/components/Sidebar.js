@@ -7,9 +7,12 @@ import { Link, useLocation } from 'react-router-dom';
  * Provides navigation to main pages and admin functions
  * Features minimalist Soft Mono styling with active state indicators
  * 
+ * @param {Object} props
+ * @param {Function} [props.onNavigate] - Called when a navigation link is clicked (useful to close mobile drawer)
+ * @param {string} [props.className] - Additional classes for the aside container
  * @returns {JSX.Element} The sidebar component
  */
-function Sidebar() {
+function Sidebar({ onNavigate, className = '' }) {
   const location = useLocation();
   const [adminExpanded, setAdminExpanded] = useState(false);
 
@@ -23,8 +26,17 @@ function Sidebar() {
     return location.pathname.startsWith('/admin');
   };
 
+  const handleNavClick = () => {
+    if (typeof onNavigate === 'function') {
+      onNavigate();
+    }
+  };
+
   return (
-    <aside className="w-64 bg-surface border-r border-gray-200 min-h-screen">
+    <aside
+      className={`w-64 bg-surface border-r border-gray-200 min-h-screen ${className}`}
+      aria-label="Sidebar navigation"
+    >
       <div className="p-6">
         {/* Main Navigation */}
         <nav className="space-y-2">
@@ -34,6 +46,7 @@ function Sidebar() {
 
           <Link
             to="/submit"
+            onClick={handleNavClick}
             className={`block px-4 py-2.5 rounded-lg transition-colors duration-200 ${
               isActive('/submit') || isActive('/')
                 ? 'bg-primary text-white'
@@ -48,6 +61,7 @@ function Sidebar() {
 
           <Link
             to="/history"
+            onClick={handleNavClick}
             className={`block px-4 py-2.5 rounded-lg transition-colors duration-200 ${
               isActive('/history')
                 ? 'bg-primary text-white'
@@ -62,6 +76,7 @@ function Sidebar() {
 
           <Link
             to="/dashboard"
+            onClick={handleNavClick}
             className={`block px-4 py-2.5 rounded-lg transition-colors duration-200 ${
               isActive('/dashboard')
                 ? 'bg-primary text-white'
@@ -87,6 +102,8 @@ function Sidebar() {
                   ? 'bg-gray-100 text-primary'
                   : 'text-text hover:bg-gray-50'
               }`}
+              aria-expanded={adminExpanded}
+              aria-controls="admin-submenu"
             >
               <div className="flex items-center space-x-3">
                 <span className="text-lg">⚙️</span>
@@ -99,9 +116,10 @@ function Sidebar() {
 
             {/* Admin Submenu */}
             {adminExpanded && (
-              <div className="mt-2 ml-4 space-y-1">
+              <div id="admin-submenu" className="mt-2 ml-4 space-y-1">
                 <Link
                   to="/admin/users"
+                  onClick={handleNavClick}
                   className={`block px-4 py-2 rounded-lg text-sm transition-colors duration-200 ${
                     isActive('/admin/users')
                       ? 'bg-primary text-white'
@@ -112,6 +130,7 @@ function Sidebar() {
                 </Link>
                 <Link
                   to="/admin/teams"
+                  onClick={handleNavClick}
                   className={`block px-4 py-2 rounded-lg text-sm transition-colors duration-200 ${
                     isActive('/admin/teams')
                       ? 'bg-primary text-white'
