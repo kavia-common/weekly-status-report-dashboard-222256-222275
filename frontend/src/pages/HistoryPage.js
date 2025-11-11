@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ReportCard, Button } from '../components';
+import { getReports } from '../services/reportService';
 
 // PUBLIC_INTERFACE
 /**
@@ -40,10 +41,15 @@ function HistoryPage() {
       setIsLoading(true);
       
       try {
-        // Simulate API call delay
+        // TODO: Uncomment when backend is ready
+        // const data = await getReports();
+        // setReports(data);
+        // setFilteredReports(data);
+        
+        // Simulate API call delay (remove when backend is ready)
         await new Promise(resolve => setTimeout(resolve, 800));
 
-        // TODO: Replace with: const data = await reportService.getReports();
+        // Mock data (remove when backend is ready)
         const mockData = [
           {
             id: 'RPT-001',

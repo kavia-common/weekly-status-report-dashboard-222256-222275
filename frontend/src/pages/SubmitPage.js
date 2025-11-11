@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReportForm from '../components/ReportForm';
+import { createReport } from '../services/reportService';
 
 // PUBLIC_INTERFACE
 /**
@@ -23,13 +24,14 @@ function SubmitPage() {
     setNotification(null);
 
     try {
-      // TODO: Replace this stub with actual API call to service layer
-      // Example: await reportService.submitReport(formData);
+      // TODO: Uncomment when backend is ready
+      // const response = await createReport(formData);
+      // console.log('Report submitted:', response);
       
-      // Simulate API call delay
+      // Simulate API call delay (remove when backend is ready)
       await new Promise(resolve => setTimeout(resolve, 1500));
 
-      console.log('Report submitted:', formData);
+      console.log('Report submitted (mock):', formData);
 
       // Show success notification
       setNotification({
