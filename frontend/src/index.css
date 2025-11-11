@@ -32,6 +32,11 @@
   #root {
     @apply h-full;
   }
+
+  #root > div {
+    /* Ensure top-level app container can use full viewport height calculations */
+    @apply min-h-screen;
+  }
 }
 
 /* Custom component styles */
