@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // PUBLIC_INTERFACE
 /**
@@ -13,6 +13,16 @@ import { Link } from 'react-router-dom';
  */
 function Navbar({ onMenuClick }) {
   const [showPopover, setShowPopover] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem('isLoggedIn');
+    } catch (e) {
+      // noop
+    }
+    navigate('/login', { replace: true });
+  };
 
   return (
     <nav className="bg-surface border-b border-gray-200 shadow-sm">
@@ -88,6 +98,14 @@ function Navbar({ onMenuClick }) {
                     >
                       Admin
                     </button>
+                    <button
+                      type="button"
+                      data-testid="logout-button"
+                      className="w-full inline-flex items-center justify-center rounded-md bg-error text-white px-3 py-2 text-sm hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 transition-colors"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
                   </div>
                 </div>
               </div>
@@ -153,6 +171,14 @@ function Navbar({ onMenuClick }) {
                         onClick={() => {}}
                       >
                         Admin
+                      </button>
+                      <button
+                        type="button"
+                        data-testid="logout-button"
+                        className="w-full inline-flex items-center justify-center rounded-md bg-error text-white px-3 py-2 text-sm hover:bg-red-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-error focus-visible:ring-offset-2 transition-colors"
+                        onClick={handleLogout}
+                      >
+                        Logout
                       </button>
                   </div>
                 </div>
